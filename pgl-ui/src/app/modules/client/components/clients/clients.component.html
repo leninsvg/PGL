@@ -1,0 +1,31 @@
+<div class="font-bold text-center grid grid-cols-5">
+  <div>Id</div>
+  <div>Nombre</div>
+  <div>Apellido</div>
+  <div>Pais</div>
+  <div>Telefono</div>
+</div>
+<div class="text-center grid grid-cols-5" *ngFor="let client of this.clients?.items">
+  <div>{{ client.id }}</div>
+  <div>{{ client.firstName }}</div>
+  <div>{{ client.lastName }}</div>
+  <div>{{ client.country }}</div>
+  <div>{{ client.phone | phoneFormat }}</div>
+</div>
+<div class="grid grid-cols-5 text-center items-center" [formGroup]="this.clientFilterForm">
+  <div>
+    Pagina {{ this.clientFilterForm.get('page').value }}  de  {{ this.clients.totalPages }}
+  </div>
+  <div class="col-span-3"></div>
+  <div>
+    <button [disabled]="this.clientFilterForm.get('page').value === 1" (click)="this.increasePage(-1)"
+            class="p-4 disabled:opacity-50"> <
+    </button>
+    <button [disabled]="this.clientFilterForm.get('page').value === this.clients.totalPages"
+            (click)="this.increasePage(+1)" class="p-4 disabled:opacity-50"> >
+    </button>
+    <select formControlName="pageSize" (change)="this.selectPage()">
+      <option *ngFor="let pageSize of pageSizes" [value]="pageSize">{{ pageSize }}</option>
+    </select>
+  </div>
+</div>
